@@ -1,0 +1,88 @@
+substitutions:
+  name: treadmill-f15
+  friendly_name: treadmill-f15
+  device_description: "Monitor a Sportstech Treadmill F15 via BLE"
+  external_components_source: github://syssi/esphome-treadmill-f15@main
+  mac_address: 27:25:E1:46:CE:E4
+
+esphome:
+  name: ${name}
+  comment: ${device_description}
+  friendly_name: ${friendly_name}
+  min_version: 2024.6.0
+  project:
+    name: "syssi.esphome-treadmill-f15"
+    version: 1.0.0
+
+esp32:
+  board: wemos_d1_mini32
+  framework:
+    type: esp-idf
+
+external_components:
+  - source: ${external_components_source}
+    refresh: 0s
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+ota:
+  platform: esphome
+
+logger:
+  level: DEBUG
+  logs:
+    esp32_ble_client: INFO
+
+api:
+  reboot_timeout: 0s
+
+esp32_ble_tracker:
+  scan_parameters:
+    active: false
+
+ble_client:
+  - mac_address: ${mac_address}
+    id: client0
+
+treadmill_f15:
+  - ble_client_id: client0
+    id: treadmill0
+    update_interval: 1s
+
+binary_sensor:
+  - platform: treadmill_f15
+    treadmill_f15_id: treadmill0
+    starting:
+      name: "Starting"
+    running:
+      name: "Running"
+    stopping:
+      name: "Stopping"
+    stopped:
+      name: "Stopped"
+
+sensor:
+  - platform: treadmill_f15
+    treadmill_f15_id: treadmill0
+    operation_mode_id:
+      name: "Operation Mode ID"
+    speed:
+      name: "Speed"
+    incline:
+      name: "Incline"
+    elapsed_time:
+      name: "Elapsed Time"
+    distance:
+      name: "Distance"
+    calories:
+      name: "Calories"
+    heart_rate:
+      name: "Heart Rate"
+
+text_sensor:
+  - platform: treadmill_f15
+    treadmill_f15_id: treadmill0
+    operation_mode:
+      name: "Operation Mode"
