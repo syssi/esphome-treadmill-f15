@@ -1,7 +1,7 @@
 import esphome.codegen as cg
 from esphome.components import button
 import esphome.config_validation as cv
-from esphome.const import CONF_FACTORY_RESET, CONF_ICON, CONF_ID
+from esphome.const import CONF_FACTORY_RESET, CONF_ID
 
 from .. import CONF_TREADMILL_F15_ID, TREADMILL_F15_COMPONENT_SCHEMA, treadmill_f15_ns
 
@@ -35,39 +35,20 @@ TreadmillButton = treadmill_f15_ns.class_(
 
 CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
-        cv.Optional(CONF_RETRIEVE_SETTINGS): button.BUTTON_SCHEMA.extend(
-            {
-                cv.GenerateID(): cv.declare_id(TreadmillButton),
-                cv.Optional(CONF_ICON, default=ICON_RETRIEVE_SETTINGS): cv.icon,
-            }
+        cv.Optional(CONF_RETRIEVE_SETTINGS): button.button_schema(
+            TreadmillButton, icon=ICON_RETRIEVE_SETTINGS
         ).extend(cv.COMPONENT_SCHEMA),
-        cv.Optional(CONF_FACTORY_RESET): button.BUTTON_SCHEMA.extend(
-            {
-                cv.GenerateID(): cv.declare_id(TreadmillButton),
-                cv.Optional(CONF_ICON, default=ICON_FACTORY_RESET): cv.icon,
-            }
+        cv.Optional(CONF_FACTORY_RESET): button.button_schema(
+            TreadmillButton, icon=ICON_FACTORY_RESET
         ).extend(cv.COMPONENT_SCHEMA),
-        cv.Optional(CONF_RESET_CHARGING_CYCLES): button.BUTTON_SCHEMA.extend(
-            {
-                cv.GenerateID(): cv.declare_id(TreadmillButton),
-                cv.Optional(CONF_ICON, default=ICON_RESET_CHARGING_CYCLES): cv.icon,
-            }
+        cv.Optional(CONF_RESET_CHARGING_CYCLES): button.button_schema(
+            TreadmillButton, icon=ICON_RESET_CHARGING_CYCLES
         ).extend(cv.COMPONENT_SCHEMA),
-        cv.Optional(CONF_RESET_TOTAL_CHARGED_CAPACITY): button.BUTTON_SCHEMA.extend(
-            {
-                cv.GenerateID(): cv.declare_id(TreadmillButton),
-                cv.Optional(
-                    CONF_ICON, default=ICON_RESET_TOTAL_CHARGED_CAPACITY
-                ): cv.icon,
-            }
+        cv.Optional(CONF_RESET_TOTAL_CHARGED_CAPACITY): button.button_schema(
+            TreadmillButton, icon=ICON_RESET_TOTAL_CHARGED_CAPACITY
         ).extend(cv.COMPONENT_SCHEMA),
-        cv.Optional(CONF_RESET_TOTAL_DISCHARGED_CAPACITY): button.BUTTON_SCHEMA.extend(
-            {
-                cv.GenerateID(): cv.declare_id(TreadmillButton),
-                cv.Optional(
-                    CONF_ICON, default=ICON_RESET_TOTAL_DISCHARGED_CAPACITY
-                ): cv.icon,
-            }
+        cv.Optional(CONF_RESET_TOTAL_DISCHARGED_CAPACITY): button.button_schema(
+            TreadmillButton, icon=ICON_RESET_TOTAL_DISCHARGED_CAPACITY
         ).extend(cv.COMPONENT_SCHEMA),
     }
 )

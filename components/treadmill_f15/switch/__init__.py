@@ -1,7 +1,7 @@
 import esphome.codegen as cg
 from esphome.components import switch
 import esphome.config_validation as cv
-from esphome.const import CONF_ICON, CONF_ID
+from esphome.const import CONF_ID
 
 from .. import CONF_TREADMILL_F15_ID, TREADMILL_F15_COMPONENT_SCHEMA, treadmill_f15_ns
 
@@ -26,17 +26,11 @@ TreadmillSwitch = treadmill_f15_ns.class_(
 
 CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
-        cv.Optional(CONF_CHARGING): switch.SWITCH_SCHEMA.extend(
-            {
-                cv.GenerateID(): cv.declare_id(TreadmillSwitch),
-                cv.Optional(CONF_ICON, default=ICON_CHARGING): cv.icon,
-            }
+        cv.Optional(CONF_CHARGING): switch.switch_schema(
+            TreadmillSwitch, icon=ICON_CHARGING
         ).extend(cv.COMPONENT_SCHEMA),
-        cv.Optional(CONF_DISCHARGING): switch.SWITCH_SCHEMA.extend(
-            {
-                cv.GenerateID(): cv.declare_id(TreadmillSwitch),
-                cv.Optional(CONF_ICON, default=ICON_DISCHARGING): cv.icon,
-            }
+        cv.Optional(CONF_DISCHARGING): switch.switch_schema(
+            TreadmillSwitch, icon=ICON_DISCHARGING
         ).extend(cv.COMPONENT_SCHEMA),
     }
 )
