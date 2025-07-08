@@ -3,7 +3,7 @@ from esphome.components import text_sensor
 import esphome.config_validation as cv
 from esphome.const import CONF_ID, ICON_TIMELAPSE
 
-from . import CONF_TREADMILL_F15_ID, TreadmillF15
+from . import CONF_TREADMILL_F15_ID, TREADMILL_F15_COMPONENT_SCHEMA
 
 DEPENDENCIES = ["treadmill_f15"]
 
@@ -17,9 +17,8 @@ TEXT_SENSORS = [
     CONF_OPERATION_MODE,
 ]
 
-CONFIG_SCHEMA = cv.Schema(
+CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
-        cv.GenerateID(CONF_TREADMILL_F15_ID): cv.use_id(TreadmillF15),
         cv.Optional(CONF_ELAPSED_TIME_FORMATTED): text_sensor.text_sensor_schema(
             text_sensor.TextSensor, icon=ICON_TIMELAPSE
         ),

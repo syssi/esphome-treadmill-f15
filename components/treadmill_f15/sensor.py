@@ -16,7 +16,7 @@ from esphome.const import (
     UNIT_SECOND,
 )
 
-from . import CONF_TREADMILL_F15_ID, TreadmillF15
+from . import CONF_TREADMILL_F15_ID, TREADMILL_F15_COMPONENT_SCHEMA
 
 DEPENDENCIES = ["treadmill_f15"]
 
@@ -43,9 +43,8 @@ SENSORS = [
 ]
 
 # pylint: disable=too-many-function-args
-CONFIG_SCHEMA = cv.Schema(
+CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
-        cv.GenerateID(CONF_TREADMILL_F15_ID): cv.use_id(TreadmillF15),
         cv.Optional(CONF_OPERATION_MODE_ID): sensor.sensor_schema(
             icon="mdi:numeric",
             accuracy_decimals=0,
