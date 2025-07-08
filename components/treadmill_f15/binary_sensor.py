@@ -3,7 +3,7 @@ from esphome.components import binary_sensor
 import esphome.config_validation as cv
 from esphome.const import CONF_ID
 
-from . import CONF_TREADMILL_F15_ID, TreadmillF15
+from . import CONF_TREADMILL_F15_ID, TREADMILL_F15_COMPONENT_SCHEMA
 
 DEPENDENCIES = ["treadmill_f15"]
 
@@ -21,9 +21,8 @@ BINARY_SENSORS = [
     CONF_STOPPED,
 ]
 
-CONFIG_SCHEMA = cv.Schema(
+CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
-        cv.GenerateID(CONF_TREADMILL_F15_ID): cv.use_id(TreadmillF15),
         cv.Optional(CONF_STARTING): binary_sensor.binary_sensor_schema(
             icon="mdi:rocket-launch"
         ),
