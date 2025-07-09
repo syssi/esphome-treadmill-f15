@@ -214,11 +214,13 @@ void TreadmillF15::dump_config() {  // NOLINT(google-readability-function-size,r
   ESP_LOGCONFIG(TAG, "TreadmillF15:");
 
   LOG_BINARY_SENSOR("", "Running", this->running_binary_sensor_);
+  LOG_BINARY_SENSOR("", "Starting", this->starting_binary_sensor_);
   LOG_BINARY_SENSOR("", "Stopping", this->stopping_binary_sensor_);
   LOG_BINARY_SENSOR("", "Stopped", this->stopped_binary_sensor_);
 
   LOG_SENSOR("", "Operation Mode ID", this->operation_mode_id_sensor_);
   LOG_SENSOR("", "Speed", this->speed_sensor_);
+  LOG_SENSOR("", "Incline", this->incline_sensor_);
   LOG_SENSOR("", "Elapsed time", this->elapsed_time_sensor_);
   LOG_SENSOR("", "Distance", this->distance_sensor_);
   LOG_SENSOR("", "Calories", this->calories_sensor_);
