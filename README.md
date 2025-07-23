@@ -54,13 +54,25 @@ esphome run esp32-ble-example.yaml
 ## Example response all sensors enabled
 
 ```
-[D][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03.0A.00.70.00.1A.00.0A.00.00.00.00.00.38.03 (17)
-[D][sensor:124]: 'treadmill-f15 speed': Sending state 1.00000 km/h with 2 decimals of accuracy
-[D][sensor:124]: 'treadmill-f15 distance': Sending state 0.02600 km with 4 decimals of accuracy
-[D][sensor:124]: 'treadmill-f15 calories': Sending state 10.00000  with 0 decimals of accuracy
-[D][sensor:124]: 'treadmill-f15 elapsed time': Sending state 112.00000 s with 0 decimals of accuracy
-[D][text_sensor:067]: 'treadmill-f15 operation mode': Sending state 'Running'
-[D][binary_sensor:036]: 'treadmill-f15 running': Sending state ON
+[I][treadmill_f15:155]: Status frame received
+[D][treadmill_f15:156]:   02.51.03.08.00.00.00.00.00.00.00.00.00.00.00.5A.03 (17)
+[D][binary_sensor:026]: 'Starting': New state is OFF
+[D][binary_sensor:026]: 'Running': New state is ON
+[D][sensor:103]: 'Operation Mode ID': Sending state 3.00000  with 0 decimals of accuracy
+[V][text_sensor:015]: 'Operation Mode': Received new state Running
+[D][text_sensor:069]: 'Operation Mode': Sending state 'Running'
+[VV][treadmill_f15:185]: Speed:        0.8 km/h
+[D][sensor:103]: 'Speed': Sending state 0.80000 km/h with 1 decimals of accuracy
+[VV][treadmill_f15:188]: Incline:      0 %
+[D][sensor:103]: 'Incline': Sending state 0.00000 % with 0 decimals of accuracy
+[VV][treadmill_f15:192]: Elapsed time: 0 s
+[D][sensor:103]: 'Elapsed Time': Sending state 0.00000 s with 0 decimals of accuracy
+[VV][treadmill_f15:197]: Distance:     0.000 km
+[D][sensor:103]: 'Distance': Sending state 0.00000 km with 3 decimals of accuracy
+[VV][treadmill_f15:201]: Calories:     0.0 cal
+[D][sensor:103]: 'Calories': Sending state 0.00000 kcal with 1 decimals of accuracy
+[VV][treadmill_f15:206]: Heart rate:   0 bpm
+[D][sensor:103]: 'Heart Rate': Sending state 0.00000 bpm with 0 decimals of accuracy
 ```
 
 ## Protocol
