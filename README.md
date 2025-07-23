@@ -11,6 +11,7 @@ ESPHome component to monitor and control a Sportstech Treadmill F15 via BLE
 ## Supported devices
 
 * Sportstech Treadmill F15
+* Sportstech Treadmill F31
 
 ## Requirements
 
