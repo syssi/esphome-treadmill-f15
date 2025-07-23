@@ -1,77 +1,91 @@
 # esphome-treadmill-f15
 
+![GitHub actions](https://github.com/syssi/esphome-treadmill-f15/actions/workflows/ci.yaml/badge.svg)
+![GitHub stars](https://img.shields.io/github/stars/syssi/esphome-treadmill-f15)
+![GitHub forks](https://img.shields.io/github/forks/syssi/esphome-treadmill-f15)
+![GitHub watchers](https://img.shields.io/github/watchers/syssi/esphome-treadmill-f15)
+[!["Buy Me A Coffee"](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/syssi)
+
+ESPHome component to monitor and control a Sportstech Treadmill F15 via BLE
+
+## Supported devices
+
+* Sportstech Treadmill F15
+
+## Requirements
+
+* [ESPHome 2024.6.0 or higher](https://github.com/esphome/esphome/releases).
+* Generic ESP32 board
+
+## Installation
+
+You can install this component with [ESPHome external components feature](https://esphome.io/components/external_components.html) like this:
+```yaml
+external_components:
+  - source: github://syssi/esphome-treadmill-f15@main
 ```
-Commands:
 
-02:50:02:52:03
-02:50:03:53:03
-02:51:51:03
-02:51:51:03
-02:53:01:00:00:00:00:00:00:00:00:52:03
+or just use the `esp32-ble-example.yaml` as proof of concept:
+
+```bash
+# Install esphome
+pip3 install esphome
+
+# Clone this external component
+git clone https://github.com/syssi/esphome-treadmill-f15.git
+cd esphome-treadmill-f15
+
+# Create a secrets.yaml containing some setup specific secrets
+cat > secrets.yaml <<EOF
+wifi_ssid: MY_WIFI_SSID
+wifi_password: MY_WIFI_PASSWORD
+
+mqtt_host: MY_MQTT_HOST
+mqtt_username: MY_MQTT_USERNAME
+mqtt_password: MY_MQTT_PASSWORD
+EOF
+
+# Validate the configuration, create a binary, upload it, and start logs
+esphome run esp32-ble-example.yaml
+
 ```
 
+## Example response all sensors enabled
+
 ```
-[21:52:19][D][treadmill_f15:561]: Send command (handle 0x15): 02.51.51.03
+[D][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03.0A.00.70.00.1A.00.0A.00.00.00.00.00.38.03 (17)
+[D][sensor:124]: 'treadmill-f15 speed': Sending state 1.00000 km/h with 2 decimals of accuracy
+[D][sensor:124]: 'treadmill-f15 distance': Sending state 0.02600 km with 4 decimals of accuracy
+[D][sensor:124]: 'treadmill-f15 calories': Sending state 10.00000  with 0 decimals of accuracy
+[D][sensor:124]: 'treadmill-f15 elapsed time': Sending state 112.00000 s with 0 decimals of accuracy
+[D][text_sensor:067]: 'treadmill-f15 operation mode': Sending state 'Running'
+[D][binary_sensor:036]: 'treadmill-f15 running': Sending state ON
+```
 
-# Speed 0.8
-02.51.03.08.00.10.00.03.00.01.00.00.00.00.00.48.03 (17)
-02.51.03.08.00.11.00.03.00.01.00.00.00.00.00.49.03 (17)
-02.51.03.08.00.12.00.04.00.01.00.00.00.00.00.4D.03 (17)
-02.51.03.08.00.13.00.04.00.01.00.00.00.00.00.4C.03 (17)
-02.51.03.08.00.14.00.04.00.01.00.00.00.00.00.4B.03 (17)
-02.51.03.08.00.15.00.04.00.01.00.00.00.00.00.4A.03 (17)
-02.51.03.08.00.16.00.04.00.01.00.00.00.00.00.49.03 (17)
-02.51.03.08.00.17.00.05.00.02.00.00.00.00.00.4A.03 (17)
-02.51.03.08.00.18.00.05.00.02.00.00.00.00.00.45.03 (17)
-02.51.03.08.00.19.00.05.00.02.00.00.00.00.00.44.03 (17)
-02.51.03.08.00.1A.00.05.00.02.00.00.00.00.00.47.03 (17)
-02.51.03.08.00.1B.00.06.00.02.00.00.00.00.00.45.03 (17)
-02.51.03.08.00.1C.00.06.00.02.00.00.00.00.00.42.03 (17)
-02.51.03.08.00.1D.00.06.00.02.00.00.00.00.00.43.03 (17)
-02.51.03.08.00.1E.00.06.00.02.00.00.00.00.00.40.03 (17)
-02.51.03.08.00.1F.00.06.00.02.00.00.00.00.00.41.03 (17)
-               ^^time
-         ^^speed
+## Protocol
 
-# Speed 1.0
-[21:53:50][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03.0A.00.70.00.1A.00.0A.00.00.00.00.00.38.03 (17)
-[21:53:51][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03.0A.00.71.00.1A.00.0A.00.00.00.00.00.39.03 (17)
-[21:53:52][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03.0A.00.72.00.1A.00.0A.00.00.00.00.00.3A.03 (17)
-[21:53:53][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03.0A.00.73.00.1B.00.0A.00.00.00.00.00.3A.03 (17)
-[21:53:54][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03.0A.00.74.00.1B.00.0A.00.00.00.00.00.3D.03 (17)
-[21:53:55][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03.0A.00.75.00.1B.00.0A.00.00.00.00.00.3C.03 (17)
-[21:53:56][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03.0A.00.76.00.1B.00.0A.00.00.00.00.00.3F.03 (17)
-[21:53:57][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03.0A.00.77.00.1C.00.0B.00.00.00.00.00.38.03 (17)
-[21:53:58][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03.0A.00.78.00.1C.00.0B.00.00.00.00.00.37.03 (17)
+See [protocol.md](docs/protocol.md) for detailed protocol analysis and reverse engineering notes.
 
-# Stopping?
-[21:56:37][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.04.03.00.16.01.48.00.1C.00.00.00.00.00.15.03 (17)
+## Known issues
 
-# Stopped
-[21:56:38][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.00.51.03 (5)
-[21:56:39][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.00.51.03 (5)
-[21:56:40][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.00.51.03 (5)
-[21:56:41][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.00.51.03 (5)
-[21:56:42][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.00.51.03 (5)
-[21:56:43][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.00.51.03 (5)
+None.
 
-# Speed 8, Distance 0.04, Cal 1, Time 0:29
-[22:01:42][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03. 3C. 00.19. 00.25. 00.0E.00.00.00.00.00.5C.03 (17)
-[22:01:43][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03. 3C. 00.1A. 00.27. 00.0F.00.00.00.00.00.5C.03 (17)
-[22:01:44][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03. 3C. 00.1B. 00.28. 00.10.00.00.00.00.00.4D.03 (17)
-[22:01:45][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.03. 3C. 00.1C. 00.2A. 00.10.00.00.00.00.00.48.03 (17)
-[22:01:46][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.04. 3A. 00.1D. 00.2C. 00.11.00.00.00.00.00.4F.03 (17)
-[22:01:47][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.04. 30. 00.1D. 00.2C. 00.11.00.00.00.00.00.45.03 (17)
-[22:01:48][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.04. 26. 00.1D. 00.2C. 00.11.00.00.00.00.00.53.03 (17)
-[22:01:49][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.04. 1D. 00.1D. 00.2C. 00.11.00.00.00.00.00.68.03 (17)
-[22:01:50][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.04. 13. 00.1D. 00.2C. 00.11.00.00.00.00.00.66.03 (17)
-[22:01:51][V][treadmill_f15:113]: Notification received (handle 0x12): 02.51.04. 09. 00.1D. 00.2C. 00.11.00.00.00.00.00.7C.03 (17)
-                                                                                 |      |     |     Cal?                CRC
-                                                                                 0.9km/h|     |
-                                                                                        29sec |
-                                                                                            0.4km
+## Debugging
+
+If this component doesn't work out of the box for your device please update your configuration to enable the debug output of the BLE component and increase the log level to the see outgoing and incoming BLE traffic:
+
+```yaml
+logger:
+  level: DEBUG
+  logs:
+    esp32_ble_client: INFO
+
+treadmill_f15:
+  - ble_client_id: client0
+    id: treadmill0
+    update_interval: 1s
 ```
 
 ## References
 
-https://github.com/tyge68/fitshow-treadmill/blob/master/src/services/BTService.js
+* https://github.com/tyge68/fitshow-treadmill/blob/master/src/services/BTService.js
