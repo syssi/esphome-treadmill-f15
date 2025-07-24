@@ -8,6 +8,8 @@
 
 ESPHome component to monitor and control a Sportstech Treadmill F15 via BLE
 
+![Lovelace entities card](lovelace-entities-card.png "Lovelace entities card")
+
 ## Supported devices
 
 * Sportstech Treadmill F15
@@ -77,7 +79,7 @@ esphome run esp32-ble-example.yaml
 
 ## Protocol
 
-See [protocol.md](docs/protocol.md) for detailed protocol analysis and reverse engineering notes.
+See [docs/protocol.md](docs/protocol.md) for detailed protocol analysis and reverse engineering notes.
 
 ## Known issues
 
