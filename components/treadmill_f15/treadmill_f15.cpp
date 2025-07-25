@@ -135,6 +135,9 @@ void TreadmillF15::on_treadmill_f15_data(const std::vector<uint8_t> &data) {
   uint8_t frame_type = data[2];
 
   switch (frame_type) {
+    case 0x01:  // start acknowledgement
+      ESP_LOGD(TAG, "Start command successul (value 0x%02X)", data[3]);
+      break;
     case 0x00:  // stopped
     case 0x02:  // starting
     case 0x03:  // running
