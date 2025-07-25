@@ -307,8 +307,8 @@ bool TreadmillF15::send_command(uint8_t register_addr, uint8_t payload) {
   command.push_back(crc_value);
   command.push_back(0x03);
 
-  ESP_LOGD(TAG, "Send structured command (register 0x%02X, payload 0x%02X): %s", register_addr, payload,
-           format_hex_pretty(command.data(), command.size()).c_str());
+  ESP_LOGVV(TAG, "Send structured command (register 0x%02X, payload 0x%02X): %s", register_addr, payload,
+            format_hex_pretty(command.data(), command.size()).c_str());
 
   return send_raw_command(command);
 }
