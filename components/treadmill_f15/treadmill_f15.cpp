@@ -135,6 +135,9 @@ void TreadmillF15::on_treadmill_f15_data(const std::vector<uint8_t> &data) {
   uint8_t frame_type = data[2];
 
   switch (frame_type) {
+    case 0x01:  // start acknowledgement
+      ESP_LOGD(TAG, "Start command successul (value 0x%02X)", data[3]);
+      break;
     case 0x00:  // stopped
     case 0x02:  // starting
     case 0x03:  // running
@@ -304,8 +307,8 @@ bool TreadmillF15::send_command(uint8_t register_addr, uint8_t payload) {
   command.push_back(crc_value);
   command.push_back(0x03);
 
-  ESP_LOGD(TAG, "Send structured command (register 0x%02X, payload 0x%02X): %s", register_addr, payload,
-           format_hex_pretty(command.data(), command.size()).c_str());
+  ESP_LOGVV(TAG, "Send structured command (register 0x%02X, payload 0x%02X): %s", register_addr, payload,
+            format_hex_pretty(command.data(), command.size()).c_str());
 
   return send_raw_command(command);
 }
