@@ -29,6 +29,10 @@ wifi:
 
 ota:
   platform: esphome
+  on_begin:
+    then:
+      - switch.turn_off: ble_client_switch0
+      - logger.log: "BLE connection suspended for OTA update"
 
 logger:
   level: DEBUG
@@ -70,6 +74,22 @@ binary_sensor:
     stopped:
       name: "Stopped"
 
+button:
+  - platform: treadmill_f15
+    treadmill_f15_id: treadmill0
+    start:
+      name: "Start"
+    stop:
+      name: "Stop"
+
+number:
+  - platform: treadmill_f15
+    treadmill_f15_id: treadmill0
+    speed:
+      name: "Speed control"
+    incline:
+      name: "Incline control"
+
 sensor:
   - platform: treadmill_f15
     treadmill_f15_id: treadmill0
@@ -88,24 +108,14 @@ sensor:
     heart_rate:
       name: "Heart Rate"
 
+switch:
+  - platform: ble_client
+    ble_client_id: client0
+    name: "Enable Bluetooth Connection"
+    id: ble_client_switch0
+
 text_sensor:
   - platform: treadmill_f15
     treadmill_f15_id: treadmill0
     operation_mode:
       name: "Operation Mode"
-
-button:
-  - platform: treadmill_f15
-    treadmill_f15_id: treadmill0
-    start:
-      name: "Start"
-    stop:
-      name: "Stop"
-
-number:
-  - platform: treadmill_f15
-    treadmill_f15_id: treadmill0
-    speed:
-      name: "Speed control"
-    incline:
-      name: "Incline control"
