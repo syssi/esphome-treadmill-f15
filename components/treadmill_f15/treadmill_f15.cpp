@@ -104,8 +104,9 @@ void TreadmillF15::gattc_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t
       break;
     }
     case ESP_GATTC_NOTIFY_EVT: {
+      char hex_buf[format_hex_pretty_size(MAX_RESPONSE_SIZE)];
       ESP_LOGV(TAG, "Notification received (handle 0x%02X): %s", param->notify.handle,
-               format_hex_pretty(param->notify.value, param->notify.value_len).c_str());
+               format_hex_pretty_to(hex_buf, param->notify.value, param->notify.value_len, ' '));
 
       std::vector<uint8_t> data(param->notify.value, param->notify.value + param->notify.value_len);
 
@@ -127,8 +128,9 @@ void TreadmillF15::update() {
 }
 
 void TreadmillF15::on_treadmill_f15_data(const std::vector<uint8_t> &data) {
+  char hex_buf[format_hex_pretty_size(MAX_RESPONSE_SIZE)];
   if (data[0] != 0x02 || data.back() != 0x03 || data.size() > MAX_RESPONSE_SIZE) {
-    ESP_LOGW(TAG, "Invalid response received: %s", format_hex_pretty(&data.front(), data.size()).c_str());
+    ESP_LOGW(TAG, "Invalid response received: %s", format_hex_pretty_to(hex_buf, data.data(), data.size(), ' '));
     return;
   }
 
@@ -153,7 +155,7 @@ void TreadmillF15::on_treadmill_f15_data(const std::vector<uint8_t> &data) {
       break;
     default:
       ESP_LOGW(TAG, "Unhandled response received (frame_type 0x%02X): %s", frame_type,
-               format_hex_pretty(&data.front(), data.size()).c_str());
+               format_hex_pretty_to(hex_buf, data.data(), data.size(), ' '));
   }
 }
 
@@ -162,8 +164,9 @@ void TreadmillF15::decode_status_data_(const std::vector<uint8_t> &data) {
     return (uint16_t(data[i + 0]) << 0) | (uint16_t(data[i + 1]) << 8);
   };
 
+  char hex_buf[format_hex_pretty_size(MAX_RESPONSE_SIZE)];
   ESP_LOGI(TAG, "Status frame received");
-  ESP_LOGD(TAG, "  %s", format_hex_pretty(&data.front(), data.size()).c_str());
+  ESP_LOGD(TAG, "  %s", format_hex_pretty_to(hex_buf, data.data(), data.size(), ' '));
 
   if (data.size() < 5) {
     ESP_LOGW(TAG, "Invalid status frame length: %d", data.size());
@@ -279,8 +282,9 @@ bool TreadmillF15::send_command(uint16_t function) {
   frame[2] = 0x51;
   frame[3] = 0x03;
 
+  char hex_buf[format_hex_pretty_size(sizeof(frame))];
   ESP_LOGD(TAG, "Send command (handle 0x%02X): %s", this->char_command_handle_,
-           format_hex_pretty(frame, sizeof(frame)).c_str());
+           format_hex_pretty_to(hex_buf, frame, sizeof(frame), ' '));
 
   auto status =
       esp_ble_gattc_write_char(this->parent_->get_gattc_if(), this->parent_->get_conn_id(), this->char_command_handle_,
@@ -294,8 +298,9 @@ bool TreadmillF15::send_command(uint16_t function) {
 }
 
 bool TreadmillF15::send_raw_command(const std::vector<uint8_t> &command) {
+  char hex_buf[format_hex_pretty_size(MAX_RESPONSE_SIZE)];
   ESP_LOGD(TAG, "Send raw command (handle 0x%02X): %s", this->char_command_handle_,
-           format_hex_pretty(command.data(), command.size()).c_str());
+           format_hex_pretty_to(hex_buf, command.data(), command.size(), ' '));
 
   auto status = esp_ble_gattc_write_char(
       this->parent_->get_gattc_if(), this->parent_->get_conn_id(), this->char_command_handle_, command.size(),
@@ -314,8 +319,9 @@ bool TreadmillF15::send_command(uint8_t register_addr, uint8_t payload) {
   command.push_back(crc_value);
   command.push_back(0x03);
 
+  char hex_buf[format_hex_pretty_size(8)];
   ESP_LOGVV(TAG, "Send structured command (register 0x%02X, payload 0x%02X): %s", register_addr, payload,
-            format_hex_pretty(command.data(), command.size()).c_str());
+            format_hex_pretty_to(hex_buf, command.data(), command.size(), ' '));
 
   return send_raw_command(command);
 }
@@ -328,8 +334,9 @@ bool TreadmillF15::send_command(uint8_t register_addr, const std::vector<uint8_t
   command.push_back(crc_value);
   command.push_back(0x03);
 
+  char hex_buf[format_hex_pretty_size(MAX_RESPONSE_SIZE)];
   ESP_LOGD(TAG, "Send structured command (register 0x%02X, payload %d bytes): %s", register_addr, payload.size(),
-           format_hex_pretty(command.data(), command.size()).c_str());
+           format_hex_pretty_to(hex_buf, command.data(), command.size(), ' '));
 
   return send_raw_command(command);
 }
@@ -351,8 +358,9 @@ bool TreadmillF15::send_speed_incline_command(float speed, float incline) {
   command.push_back(crc_value);
   command.push_back(0x03);  // End frame
 
+  char hex_buf[format_hex_pretty_size(16)];
   ESP_LOGD(TAG, "Send speed/incline command (speed=%.1f km/h, incline=%.0f%%): %s", speed, incline,
-           format_hex_pretty(command.data(), command.size()).c_str());
+           format_hex_pretty_to(hex_buf, command.data(), command.size(), ' '));
 
   return send_raw_command(command);
 }
