@@ -17,7 +17,7 @@ ESPHome component to monitor and control a Sportstech Treadmill F15 via BLE
 
 ## Requirements
 
-* [ESPHome 2024.6.0 or higher](https://github.com/esphome/esphome/releases).
+* [ESPHome 2026.1.0 or higher](https://github.com/esphome/esphome/releases).
 * Generic ESP32 board
 
 ## Installation
