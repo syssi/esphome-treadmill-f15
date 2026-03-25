@@ -69,24 +69,24 @@ class TreadmillF15 : public esphome::ble_client::BLEClientNode, public PollingCo
   bool send_speed_incline_command(float speed, float incline);
 
  protected:
-  binary_sensor::BinarySensor *running_binary_sensor_;
-  binary_sensor::BinarySensor *starting_binary_sensor_;
-  binary_sensor::BinarySensor *stopping_binary_sensor_;
-  binary_sensor::BinarySensor *stopped_binary_sensor_;
+  binary_sensor::BinarySensor *running_binary_sensor_{nullptr};
+  binary_sensor::BinarySensor *starting_binary_sensor_{nullptr};
+  binary_sensor::BinarySensor *stopping_binary_sensor_{nullptr};
+  binary_sensor::BinarySensor *stopped_binary_sensor_{nullptr};
 
-  sensor::Sensor *operation_mode_id_sensor_;
-  sensor::Sensor *speed_sensor_;
-  sensor::Sensor *incline_sensor_;
-  sensor::Sensor *elapsed_time_sensor_;
-  sensor::Sensor *distance_sensor_;
-  sensor::Sensor *calories_sensor_;
-  sensor::Sensor *heart_rate_sensor_;
+  sensor::Sensor *operation_mode_id_sensor_{nullptr};
+  sensor::Sensor *speed_sensor_{nullptr};
+  sensor::Sensor *incline_sensor_{nullptr};
+  sensor::Sensor *elapsed_time_sensor_{nullptr};
+  sensor::Sensor *distance_sensor_{nullptr};
+  sensor::Sensor *calories_sensor_{nullptr};
+  sensor::Sensor *heart_rate_sensor_{nullptr};
 
-  number::Number *speed_number_;
-  number::Number *incline_number_;
+  number::Number *speed_number_{nullptr};
+  number::Number *incline_number_{nullptr};
 
-  text_sensor::TextSensor *elapsed_time_formatted_text_sensor_;
-  text_sensor::TextSensor *operation_mode_text_sensor_;
+  text_sensor::TextSensor *elapsed_time_formatted_text_sensor_{nullptr};
+  text_sensor::TextSensor *operation_mode_text_sensor_{nullptr};
 
   uint16_t char_notify_handle_;
   uint16_t char_command_handle_;
