@@ -35,10 +35,10 @@ CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
         cv.Optional(CONF_START): button.button_schema(
             TreadmillButton, icon=ICON_START
-        ).extend(cv.COMPONENT_SCHEMA),
+        ),
         cv.Optional(CONF_STOP): button.button_schema(
             TreadmillButton, icon=ICON_STOP
-        ).extend(cv.COMPONENT_SCHEMA),
+        ),
     }
 )
 
