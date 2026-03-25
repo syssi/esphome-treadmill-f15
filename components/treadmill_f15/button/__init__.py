@@ -1,7 +1,7 @@
 import esphome.codegen as cg
 from esphome.components import button
 import esphome.config_validation as cv
-from esphome.const import CONF_ID, CONF_STOP
+from esphome.const import CONF_STOP
 
 from .. import CONF_TREADMILL_F15_ID, TREADMILL_F15_COMPONENT_SCHEMA, treadmill_f15_ns
 
@@ -44,9 +44,8 @@ async def to_code(config):
     for button_type in BUTTON_TYPES:
         if button_type in config:
             conf = config[button_type]
-            var = cg.new_Pvariable(conf[CONF_ID])
+            var = await button.new_button(conf)
             await cg.register_component(var, conf)
-            await button.register_button(var, conf)
             cg.add(var.set_parent(hub))
             cg.add(var.set_button_type(button_type))
 
