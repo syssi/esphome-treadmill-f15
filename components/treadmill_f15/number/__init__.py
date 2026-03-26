@@ -9,7 +9,6 @@ from esphome.const import (
     CONF_RESTORE_VALUE,
     CONF_SPEED,
     CONF_STEP,
-    DEVICE_CLASS_EMPTY,
     ENTITY_CATEGORY_CONFIG,
     UNIT_KILOMETER_PER_HOUR,
     UNIT_PERCENT,
@@ -40,7 +39,7 @@ TREADMILL_NUMBER_SCHEMA = (
     number.number_schema(
         TreadmillNumber,
         entity_category=ENTITY_CATEGORY_CONFIG,
-        device_class=DEVICE_CLASS_EMPTY,
+        device_class=None,
     )
     .extend(
         {
@@ -58,7 +57,7 @@ CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
             TreadmillNumber,
             icon=ICON_SPEEDOMETER,
             entity_category=ENTITY_CATEGORY_CONFIG,
-            device_class=DEVICE_CLASS_EMPTY,
+            device_class=None,
             unit_of_measurement=UNIT_KILOMETER_PER_HOUR,
         )
         .extend(cv.COMPONENT_SCHEMA)
@@ -78,7 +77,7 @@ CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
             TreadmillNumber,
             icon=ICON_INCLINE,
             entity_category=ENTITY_CATEGORY_CONFIG,
-            device_class=DEVICE_CLASS_EMPTY,
+            device_class=None,
             unit_of_measurement=UNIT_PERCENT,
         )
         .extend(cv.COMPONENT_SCHEMA)
