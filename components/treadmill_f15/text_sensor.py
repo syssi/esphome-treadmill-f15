@@ -20,10 +20,10 @@ TEXT_SENSORS = [
 CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
         cv.Optional(CONF_ELAPSED_TIME_FORMATTED): text_sensor.text_sensor_schema(
-            text_sensor.TextSensor, icon=ICON_TIMELAPSE
+            icon=ICON_TIMELAPSE
         ),
         cv.Optional(CONF_OPERATION_MODE): text_sensor.text_sensor_schema(
-            text_sensor.TextSensor, icon="mdi:run"
+            icon="mdi:run"
         ),
     }
 )
