@@ -88,8 +88,8 @@ class TreadmillF15 : public esphome::ble_client::BLEClientNode, public PollingCo
   text_sensor::TextSensor *elapsed_time_formatted_text_sensor_{nullptr};
   text_sensor::TextSensor *operation_mode_text_sensor_{nullptr};
 
-  uint16_t char_notify_handle_;
-  uint16_t char_command_handle_;
+  uint16_t char_notify_handle_{0};
+  uint16_t char_command_handle_{0};
 
   void decode_status_data_(const std::vector<uint8_t> &data);
   void publish_state_(binary_sensor::BinarySensor *binary_sensor, const bool &state);
