@@ -32,61 +32,58 @@ CONF_HEART_RATE = "heart_rate"
 
 UNIT_KILO_CALORIE = "kcal"
 
-SENSORS = [
-    CONF_OPERATION_MODE_ID,
-    CONF_SPEED,
-    CONF_INCLINE,
-    CONF_ELAPSED_TIME,
-    CONF_DISTANCE,
-    CONF_CALORIES,
-    CONF_HEART_RATE,
-]
+# key: sensor_schema kwargs
+SENSOR_DEFS = {
+    CONF_OPERATION_MODE_ID: {
+        "icon": "mdi:numeric",
+        "accuracy_decimals": 0,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_SPEED: {
+        "unit_of_measurement": UNIT_KILOMETER_PER_HOUR,
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_SPEED,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_INCLINE: {
+        "unit_of_measurement": UNIT_PERCENT,
+        "icon": "mdi:slope-uphill",
+        "accuracy_decimals": 0,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_ELAPSED_TIME: {
+        "unit_of_measurement": UNIT_SECOND,
+        "accuracy_decimals": 0,
+        "device_class": DEVICE_CLASS_DURATION,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_DISTANCE: {
+        "unit_of_measurement": UNIT_KILOMETER,
+        "accuracy_decimals": 3,
+        "device_class": DEVICE_CLASS_DISTANCE,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_CALORIES: {
+        "unit_of_measurement": UNIT_KILO_CALORIE,
+        "icon": "mdi:fire",
+        "accuracy_decimals": 1,
+        "device_class": DEVICE_CLASS_ENERGY,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+    CONF_HEART_RATE: {
+        "unit_of_measurement": UNIT_BEATS_PER_MINUTE,
+        "icon": "mdi:heart-pulse",
+        "accuracy_decimals": 0,
+        "state_class": STATE_CLASS_MEASUREMENT,
+    },
+}
 
-# pylint: disable=too-many-function-args
+SENSORS = list(SENSOR_DEFS)
+
 CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
-        cv.Optional(CONF_OPERATION_MODE_ID): sensor.sensor_schema(
-            icon="mdi:numeric",
-            accuracy_decimals=0,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_SPEED): sensor.sensor_schema(
-            unit_of_measurement=UNIT_KILOMETER_PER_HOUR,
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_SPEED,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_INCLINE): sensor.sensor_schema(
-            unit_of_measurement=UNIT_PERCENT,
-            icon="mdi:slope-uphill",
-            accuracy_decimals=0,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_ELAPSED_TIME): sensor.sensor_schema(
-            unit_of_measurement=UNIT_SECOND,
-            accuracy_decimals=0,
-            device_class=DEVICE_CLASS_DURATION,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_DISTANCE): sensor.sensor_schema(
-            unit_of_measurement=UNIT_KILOMETER,
-            accuracy_decimals=3,
-            device_class=DEVICE_CLASS_DISTANCE,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_CALORIES): sensor.sensor_schema(
-            unit_of_measurement=UNIT_KILO_CALORIE,
-            icon="mdi:fire",
-            accuracy_decimals=1,
-            device_class=DEVICE_CLASS_ENERGY,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
-        cv.Optional(CONF_HEART_RATE): sensor.sensor_schema(
-            unit_of_measurement=UNIT_BEATS_PER_MINUTE,
-            icon="mdi:heart-pulse",
-            accuracy_decimals=0,
-            state_class=STATE_CLASS_MEASUREMENT,
-        ),
+        cv.Optional(key): sensor.sensor_schema(**kwargs)
+        for key, kwargs in SENSOR_DEFS.items()
     }
 )
 
