@@ -34,8 +34,6 @@ BINARY_SENSOR_DEFS = {
     },
 }
 
-BINARY_SENSORS = list(BINARY_SENSOR_DEFS)
-
 CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
         cv.Optional(key): binary_sensor.binary_sensor_schema(**kwargs)
@@ -46,7 +44,7 @@ CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
 
 async def to_code(config):
     hub = await cg.get_variable(config[CONF_TREADMILL_F15_ID])
-    for key in BINARY_SENSORS:
+    for key in BINARY_SENSOR_DEFS:
         if key in config:
             conf = config[key]
             sens = await binary_sensor.new_binary_sensor(conf)
