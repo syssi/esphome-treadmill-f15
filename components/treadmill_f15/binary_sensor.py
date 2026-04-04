@@ -14,31 +14,32 @@ CONF_RUNNING = "running"
 CONF_STOPPING = "stopping"
 CONF_STOPPED = "stopped"
 
-BINARY_SENSORS = [
-    CONF_STARTING,
-    CONF_RUNNING,
-    CONF_STOPPING,
-    CONF_STOPPED,
-]
+# key: binary_sensor_schema kwargs
+BINARY_SENSOR_DEFS = {
+    CONF_STARTING: {
+        "icon": "mdi:rocket-launch",
+        "entity_category": ENTITY_CATEGORY_DIAGNOSTIC,
+    },
+    CONF_RUNNING: {
+        "icon": "mdi:run-fast",
+        "entity_category": ENTITY_CATEGORY_DIAGNOSTIC,
+    },
+    CONF_STOPPING: {
+        "icon": "mdi:run",
+        "entity_category": ENTITY_CATEGORY_DIAGNOSTIC,
+    },
+    CONF_STOPPED: {
+        "icon": "mdi:pause",
+        "entity_category": ENTITY_CATEGORY_DIAGNOSTIC,
+    },
+}
+
+BINARY_SENSORS = list(BINARY_SENSOR_DEFS)
 
 CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
-        cv.Optional(CONF_STARTING): binary_sensor.binary_sensor_schema(
-            icon="mdi:rocket-launch",
-            entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
-        ),
-        cv.Optional(CONF_RUNNING): binary_sensor.binary_sensor_schema(
-            icon="mdi:run-fast",
-            entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
-        ),
-        cv.Optional(CONF_STOPPING): binary_sensor.binary_sensor_schema(
-            icon="mdi:run",
-            entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
-        ),
-        cv.Optional(CONF_STOPPED): binary_sensor.binary_sensor_schema(
-            icon="mdi:pause",
-            entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
-        ),
+        cv.Optional(key): binary_sensor.binary_sensor_schema(**kwargs)
+        for key, kwargs in BINARY_SENSOR_DEFS.items()
     }
 )
 
