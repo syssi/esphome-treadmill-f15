@@ -78,8 +78,6 @@ SENSOR_DEFS = {
     },
 }
 
-SENSORS = list(SENSOR_DEFS)
-
 CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
         cv.Optional(key): sensor.sensor_schema(**kwargs)
@@ -90,7 +88,7 @@ CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
 
 async def to_code(config):
     hub = await cg.get_variable(config[CONF_TREADMILL_F15_ID])
-    for key in SENSORS:
+    for key in SENSOR_DEFS:
         if key in config:
             conf = config[key]
             sens = await sensor.new_sensor(conf)
