@@ -12,8 +12,7 @@
 
 #include <esp_gattc_api.h>
 
-namespace esphome {
-namespace treadmill_f15 {
+namespace esphome::treadmill_f15 {
 
 namespace espbt = esphome::esp32_ble_tracker;
 
@@ -118,7 +117,6 @@ class TreadmillF15 : public esphome::ble_client::BLEClientNode, public PollingCo
   }
 };
 
-}  // namespace treadmill_f15
-}  // namespace esphome
+}  // namespace esphome::treadmill_f15
 
 #endif

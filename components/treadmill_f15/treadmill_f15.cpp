@@ -9,8 +9,7 @@
 #define ADDR_STR(x) (x).c_str()
 #endif
 
-namespace esphome {
-namespace treadmill_f15 {
+namespace esphome::treadmill_f15 {
 
 static const char *const TAG = "treadmill_f15";
 
@@ -365,5 +364,4 @@ bool TreadmillF15::send_speed_incline_command(float speed, float incline) {
   return send_raw_command(command);
 }
 
-}  // namespace treadmill_f15
-}  // namespace esphome
+}  // namespace esphome::treadmill_f15

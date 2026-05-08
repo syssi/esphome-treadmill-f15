@@ -2,8 +2,7 @@
 #include "esphome/core/log.h"
 #include "esphome/core/application.h"
 
-namespace esphome {
-namespace treadmill_f15 {
+namespace esphome::treadmill_f15 {
 
 static const char *const TAG = "treadmill_f15.number";
 
@@ -36,5 +35,4 @@ void TreadmillNumber::control(float value) {
   }
 }
 
-}  // namespace treadmill_f15
-}  // namespace esphome
+}  // namespace esphome::treadmill_f15

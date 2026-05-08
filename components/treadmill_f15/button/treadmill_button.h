@@ -5,8 +5,7 @@
 #include "esphome/components/button/button.h"
 #include <vector>
 
-namespace esphome {
-namespace treadmill_f15 {
+namespace esphome::treadmill_f15 {
 
 class TreadmillF15;
 
@@ -28,5 +27,4 @@ class TreadmillButton : public button::Button, public Component {
   std::vector<uint8_t> command_payload_;
 };
 
-}  // namespace treadmill_f15
-}  // namespace esphome
+}  // namespace esphome::treadmill_f15
