@@ -4,8 +4,7 @@
 #include "esphome/core/component.h"
 #include "esphome/components/number/number.h"
 
-namespace esphome {
-namespace treadmill_f15 {
+namespace esphome::treadmill_f15 {
 
 class TreadmillF15;
 
@@ -28,5 +27,4 @@ class TreadmillNumber : public number::Number, public Component {
   float initial_value_;
 };
 
-}  // namespace treadmill_f15
-}  // namespace esphome
+}  // namespace esphome::treadmill_f15
