@@ -1,7 +1,7 @@
 import esphome.codegen as cg
 from esphome.components import text_sensor
 import esphome.config_validation as cv
-from esphome.const import ICON_TIMELAPSE
+from esphome.const import ENTITY_CATEGORY_DIAGNOSTIC, ICON_TIMELAPSE
 
 from . import CONF_TREADMILL_F15_ID, TREADMILL_F15_COMPONENT_SCHEMA
 
@@ -20,10 +20,12 @@ TEXT_SENSORS = [
 CONFIG_SCHEMA = TREADMILL_F15_COMPONENT_SCHEMA.extend(
     {
         cv.Optional(CONF_ELAPSED_TIME_FORMATTED): text_sensor.text_sensor_schema(
-            icon=ICON_TIMELAPSE
+            icon=ICON_TIMELAPSE,
+            entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
         ),
         cv.Optional(CONF_OPERATION_MODE): text_sensor.text_sensor_schema(
-            icon="mdi:run"
+            icon="mdi:run",
+            entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
         ),
     }
 )
