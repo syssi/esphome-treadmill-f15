@@ -1,25 +1,33 @@
 #pragma once
 
 #include "esphome/core/component.h"
-#include "esphome/components/ble_client/ble_client.h"
-#include "esphome/components/esp32_ble_tracker/esp32_ble_tracker.h"
 #include "esphome/components/binary_sensor/binary_sensor.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/components/number/number.h"
 
 #ifdef USE_ESP32
-
+#include "esphome/components/ble_client/ble_client.h"
+#include "esphome/components/esp32_ble_tracker/esp32_ble_tracker.h"
 #include <esp_gattc_api.h>
+#endif
 
 namespace esphome::treadmill_f15 {
 
+#ifdef USE_ESP32
 namespace espbt = esphome::esp32_ble_tracker;
+#endif
 
-class TreadmillF15 : public esphome::ble_client::BLEClientNode, public PollingComponent {
+class TreadmillF15 :
+#ifdef USE_ESP32
+    public esphome::ble_client::BLEClientNode,
+#endif
+    public PollingComponent {
  public:
+#ifdef USE_ESP32
   void gattc_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if,
                            esp_ble_gattc_cb_param_t *param) override;
+#endif
   void dump_config() override;
   void update() override;
   float get_setup_priority() const override { return setup_priority::DATA; }
@@ -61,11 +69,14 @@ class TreadmillF15 : public esphome::ble_client::BLEClientNode, public PollingCo
   float get_incline_number_state() const { return incline_number_ ? incline_number_->state : 0.0f; }
 
   void on_treadmill_f15_data(const std::vector<uint8_t> &data);
+
+#ifdef USE_ESP32
   bool send_command(uint16_t function);
   bool send_command(uint8_t register_addr, uint8_t payload);
   bool send_command(uint8_t register_addr, const std::vector<uint8_t> &payload);
   bool send_raw_command(const std::vector<uint8_t> &command);
   bool send_speed_incline_command(float speed, float incline);
+#endif
 
  protected:
   binary_sensor::BinarySensor *running_binary_sensor_{nullptr};
@@ -87,8 +98,10 @@ class TreadmillF15 : public esphome::ble_client::BLEClientNode, public PollingCo
   text_sensor::TextSensor *elapsed_time_formatted_text_sensor_{nullptr};
   text_sensor::TextSensor *operation_mode_text_sensor_{nullptr};
 
+#ifdef USE_ESP32
   uint16_t char_notify_handle_{0};
   uint16_t char_command_handle_{0};
+#endif
 
   void decode_status_data_(const std::vector<uint8_t> &data);
   void publish_state_(binary_sensor::BinarySensor *binary_sensor, const bool &state);
@@ -118,5 +131,3 @@ class TreadmillF15 : public esphome::ble_client::BLEClientNode, public PollingCo
 };
 
 }  // namespace esphome::treadmill_f15
-
-#endif

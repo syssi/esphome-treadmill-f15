@@ -13,10 +13,12 @@ namespace esphome::treadmill_f15 {
 
 static const char *const TAG = "treadmill_f15";
 
+#ifdef USE_ESP32
 static const uint16_t TREADMILL_BMS_SERVICE_UUID = 0xFFF0;
 
 static const uint16_t TREADMILL_BMS_NOTIFY_CHARACTERISTIC_UUID = 0xFFF1;
 static const uint16_t TREADMILL_BMS_CONTROL_CHARACTERISTIC_UUID = 0xFFF2;
+#endif
 
 static const uint8_t MAX_RESPONSE_SIZE = 108;
 
@@ -28,6 +30,7 @@ uint8_t crc(const uint8_t data[], const uint8_t len) {
   return crc;
 }
 
+#ifdef USE_ESP32
 void TreadmillF15::gattc_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t gattc_if,
                                        esp_ble_gattc_cb_param_t *param) {
   switch (event) {
@@ -36,8 +39,6 @@ void TreadmillF15::gattc_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t
     }
     case ESP_GATTC_DISCONNECT_EVT: {
       this->node_state = espbt::ClientState::IDLE;
-
-      // this->publish_state_(this->voltage_sensor_, NAN);
 
       if (this->char_notify_handle_ != 0) {
         auto status = esp_ble_gattc_unregister_for_notify(this->parent()->get_gattc_if(),
@@ -59,24 +60,6 @@ void TreadmillF15::gattc_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_t
                  ADDR_STR(this->parent_->address_str()));
         break;
       }
-
-      //  ESP_GATTC_SEARCH_CMPL_EVT
-      //  Service UUID: 0x1800
-      //   start_handle: 0x1  end_handle: 0x3
-      //  Service UUID: 0x1801
-      //   start_handle: 0x4  end_handle: 0x6
-      //  Service UUID: 0x180A
-      //   start_handle: 0x7  end_handle: 0xf
-      //  Service UUID: 0xFFF0
-      //   start_handle: 0x10  end_handle: 0x18
-      //  Connected
-      //   characteristic 0xFFF1, handle 0x12, properties 0x10
-      //   characteristic 0xFFF2, handle 0x15, properties 0x4
-      //   characteristic 0xFFF3, handle 0x17, properties 0x14
-      //  gattc_event_handler: event=18 gattc_if=3
-      //  cfg_mtu status 0, mtu 515
-      //  gattc_event_handler: event=38 gattc_if=3
-      //  ESP_GATTC_REG_FOR_NOTIFY_EVT
 
       this->char_notify_handle_ = char_notify->handle;
 
@@ -125,6 +108,9 @@ void TreadmillF15::update() {
 
   this->send_command(0x00);
 }
+#else
+void TreadmillF15::update() {}
+#endif
 
 void TreadmillF15::on_treadmill_f15_data(const std::vector<uint8_t> &data) {
   char hex_buf[format_hex_pretty_size(MAX_RESPONSE_SIZE)];
@@ -273,6 +259,7 @@ void TreadmillF15::publish_state_(text_sensor::TextSensor *text_sensor, const st
   text_sensor->publish_state(state);
 }
 
+#ifdef USE_ESP32
 bool TreadmillF15::send_command(uint16_t function) {
   uint8_t frame[4];
 
@@ -363,5 +350,6 @@ bool TreadmillF15::send_speed_incline_command(float speed, float incline) {
 
   return send_raw_command(command);
 }
+#endif
 
 }  // namespace esphome::treadmill_f15
