@@ -10,7 +10,7 @@ void TreadmillButton::dump_config() {
   ESP_LOGCONFIG(TAG, "TreadmillF15 Button");
   ESP_LOGCONFIG(TAG, "  Button Type: %s", this->button_type_.c_str());
   ESP_LOGCONFIG(TAG, "  Register: 0x%02X", this->register_address_);
-  ESP_LOGCONFIG(TAG, "  Payload Length: %d bytes", this->command_payload_.size());
+  ESP_LOGCONFIG(TAG, "  Payload Length: %zu bytes", this->command_payload_.size());
   LOG_BUTTON("", "TreadmillF15 Button", this);
 }
 
