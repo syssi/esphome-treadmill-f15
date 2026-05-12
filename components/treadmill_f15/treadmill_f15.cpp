@@ -154,7 +154,7 @@ void TreadmillF15::decode_status_data_(const std::vector<uint8_t> &data) {
   ESP_LOGD(TAG, "  %s", format_hex_pretty_to(hex_buf, data.data(), data.size(), ' '));
 
   if (data.size() < 5) {
-    ESP_LOGW(TAG, "Invalid status frame length: %d", data.size());
+    ESP_LOGW(TAG, "Invalid status frame length: %zu", data.size());
     return;
   }
 
@@ -321,7 +321,7 @@ bool TreadmillF15::send_command(uint8_t register_addr, const std::vector<uint8_t
   command.push_back(0x03);
 
   char hex_buf[format_hex_pretty_size(MAX_RESPONSE_SIZE)];
-  ESP_LOGD(TAG, "Send structured command (register 0x%02X, payload %d bytes): %s", register_addr, payload.size(),
+  ESP_LOGD(TAG, "Send structured command (register 0x%02X, payload %zu bytes): %s", register_addr, payload.size(),
            format_hex_pretty_to(hex_buf, command.data(), command.size(), ' '));
 
   return send_raw_command(command);
