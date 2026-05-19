@@ -36,7 +36,7 @@ esp32_ble_tracker:
     active: false
 
 ble_client:
-  - mac_address: c8:47:8c:e8:82:09
+  - mac_address: !secret treadmill0_mac_address
     id: client0
 
 treadmill_f15:

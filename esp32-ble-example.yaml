@@ -3,8 +3,6 @@ substitutions:
   friendly_name: treadmill-f15
   device_description: "Monitor a Sportstech Treadmill F15 via BLE"
   external_components_source: github://syssi/esphome-treadmill-f15@main
-  mac_address: 27:25:E1:46:CE:E4
-
 esphome:
   name: ${name}
   comment: ${device_description}
@@ -54,7 +52,7 @@ esp32_ble_tracker:
     active: false
 
 ble_client:
-  - mac_address: ${mac_address}
+  - mac_address: !secret treadmill0_mac_address
     id: client0
 
 treadmill_f15:
