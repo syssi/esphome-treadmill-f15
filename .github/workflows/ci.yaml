@@ -16,8 +16,8 @@ permissions:
 
 env:
   FORCE_COLOR: 1
-  DEFAULT_PYTHON: "3.11"
-  PYUPGRADE_TARGET: "--py311-plus"
+  DEFAULT_PYTHON: "3.12"
+  PYUPGRADE_TARGET: "--py312-plus"
 
 concurrency:
   # yamllint disable-line rule:line-length
@@ -56,6 +56,7 @@ jobs:
           cp -r ../components/* esphome/components/
           mkdir -p tests/components
           cp -r ../tests/components/* tests/components/
+          python3 ../.patch-build-helpers.py script/build_helpers.py
           git config user.name "ci"
           git config user.email "ci@github.com"
           git add .
