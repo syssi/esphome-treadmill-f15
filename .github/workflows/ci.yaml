@@ -56,7 +56,6 @@ jobs:
           cp -r ../components/* esphome/components/
           mkdir -p tests/components
           cp -r ../tests/components/* tests/components/
-          python3 ../.patch-build-helpers.py script/build_helpers.py
           git config user.name "ci"
           git config user.email "ci@github.com"
           git add .
