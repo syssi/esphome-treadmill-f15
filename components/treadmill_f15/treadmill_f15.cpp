@@ -9,9 +9,14 @@
 #define ADDR_STR(x) (x).c_str()
 #endif
 
+// Fallback for ESPHome < 2026.10.0
+#ifndef ESPHOME_LOG_TAG
+#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
+#endif
+
 namespace esphome::treadmill_f15 {
 
-static const char *const TAG = "treadmill_f15";
+ESPHOME_LOG_TAG(TAG, "treadmill_f15");
 
 #ifdef USE_ESP32
 static const uint16_t TREADMILL_BMS_SERVICE_UUID = 0xFFF0;

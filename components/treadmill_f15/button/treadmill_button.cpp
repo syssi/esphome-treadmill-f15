@@ -2,9 +2,14 @@
 #include "esphome/core/log.h"
 #include "esphome/core/application.h"
 
+// Fallback for ESPHome < 2026.10.0
+#ifndef ESPHOME_LOG_TAG
+#define ESPHOME_LOG_TAG(name, tag) static const char *const name = tag
+#endif
+
 namespace esphome::treadmill_f15 {
 
-static const char *const TAG = "treadmill_f15.button";
+ESPHOME_LOG_TAG(TAG, "treadmill_f15.button");
 
 void TreadmillButton::dump_config() {
   ESP_LOGCONFIG(TAG, "TreadmillF15 Button");
