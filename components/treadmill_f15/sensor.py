@@ -17,6 +17,7 @@ from esphome.const import (
 )
 
 from . import CONF_TREADMILL_F15_ID, TREADMILL_F15_COMPONENT_SCHEMA
+from .const import CONF_INCLINE
 
 DEPENDENCIES = ["treadmill_f15"]
 
@@ -24,7 +25,6 @@ CODEOWNERS = ["@syssi"]
 
 CONF_OPERATION_MODE_ID = "operation_mode_id"
 # CONF_SPEED = "speed"
-CONF_INCLINE = "incline"
 CONF_ELAPSED_TIME = "elapsed_time"
 # CONF_DISTANCE = "distance"
 CONF_CALORIES = "calories"
