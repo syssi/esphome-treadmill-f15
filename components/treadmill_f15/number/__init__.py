@@ -16,13 +16,13 @@ from esphome.const import (
 )
 
 from .. import CONF_TREADMILL_F15_ID, TREADMILL_F15_COMPONENT_SCHEMA, treadmill_f15_ns
+from ..const import CONF_INCLINE
 
 DEPENDENCIES = ["treadmill_f15"]
 
 CODEOWNERS = ["@syssi"]
 
 # CONF_SPEED = "speed"
-CONF_INCLINE = "incline"
 
 ICON_SPEEDOMETER = "mdi:speedometer"
 ICON_INCLINE = "mdi:angle-acute"
