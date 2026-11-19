@@ -16,7 +16,6 @@ class TreadmillButton : public button::Button, public Component {
   void set_register_address(uint8_t register_addr) { this->register_address_ = register_addr; };
   void set_command_payload(const std::vector<uint8_t> &payload) { this->command_payload_ = payload; };
   void dump_config() override;
-  void loop() override {}
   float get_setup_priority() const override { return setup_priority::DATA; }
 
  protected:

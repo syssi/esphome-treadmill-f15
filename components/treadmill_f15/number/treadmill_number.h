@@ -16,7 +16,6 @@ class TreadmillNumber : public number::Number, public Component {
   void set_initial_value(float initial_value) { this->initial_value_ = initial_value; };
   void setup() override;
   void dump_config() override;
-  void loop() override {}
   float get_setup_priority() const override { return setup_priority::DATA; }
 
  protected:
